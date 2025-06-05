@@ -96,6 +96,10 @@
 
 <script>
   const client = mqtt.connect('wss://broker.hivemq.com:8000/mqtt');
+  client.on("connect", () => {
+  log("Conectado ao broker");
+});
+
 
   const log = document.getElementById("log");
   const topics = {
