@@ -3,3 +3,4 @@ The html page was designed to be a simple way to intecract via mqtt with a esp b
 The .ino file is the enbbeded software in the esp32 and as of this moment does not require any extra hardware to run.
 
 The embbeded software was developed in Arduino IDE and is using FreeRTOS architecture. 
+To access the dashboard go to: https://bernardocorrea.github.io/dashboard-mqtt/
