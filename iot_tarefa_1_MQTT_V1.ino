@@ -2,7 +2,7 @@
 #include <PubSubClient.h>
 
 const char* ssid  = ""; //wifi name
-const char* password = ; //wifi password
+const char* password = ""; //wifi password
 
 //infos MQTT broker
 const char* mqtt_server = "broker.hivemq.com"; //public broker
