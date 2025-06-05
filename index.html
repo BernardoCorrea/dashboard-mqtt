@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Controle MQTT - 9º Andar | Equipe 9</title>
+  <title>Dashboard MQTT</title>
   <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -38,166 +38,144 @@
   </style>
 </head>
 <body>
+  <h1>Controle e Monitoramento MQTT - 9º andar | Equipe 9</h1>
 
-<h2>Controle e monitoramento MQTT - 9º andar | Equipe 9</h2>
-<div class="row">
+  <div class="row">
+    <div class="column">
+      <h2>SALA 1</h2>
+      Luz atual: <span id="luzsala1">Desconhecido</span><br>
+      Temperatura atual: <span id="tempsala1">Desconhecido</span><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/light/set', 'on')">Luz ON</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/light/set', 'off')">Luz OFF</button><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/temp/set', 'max')">Temp MAX</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/temp/set', 'min')">Temp MIN</button><br>
+      <input type="number" id="tempsala1value" min="18" max="24" placeholder="Digite a temperatura desejada">
+      <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room1/temp/set', 'tempsala1value')">Enviar Temp</button>
+    </div>
 
-  <!-- Sala 1 -->
-  <div class="column">
-    <h3>SALA 1</h3>
-    Luz atual: <span id="luzsala1">Desconhecido</span><br>
-    Temperatura atual: <span id="tempsala1">Desconhecido</span><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/light/set', 'on')">Luz ON</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/light/set', 'off')">Luz OFF</button><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/temp/set', 'max')">Temp MAX</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room1/temp/set', 'min')">Temp MIN</button><br>
-    <input type="number" id="tempsala1value" min="18" max="24" placeholder="Temperatura desejada">
-    <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room1/temp/set', 'tempsala1value')">Enviar Temp</button>
+    <div class="column">
+      <h2>SALA 2</h2>
+      Luz atual: <span id="luzsala2">Desconhecido</span><br>
+      Temperatura atual: <span id="tempsala2">Desconhecido</span><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/light/set', 'on')">Luz ON</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/light/set', 'off')">Luz OFF</button><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/temp/set', 'max')">Temp MAX</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/temp/set', 'min')">Temp MIN</button><br>
+      <input type="number" id="tempsala2value" min="18" max="24" placeholder="Digite a temperatura desejada">
+      <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room2/temp/set', 'tempsala2value')">Enviar Temp</button>
+    </div>
+
+    <div class="column">
+      <h2>SALA 3</h2>
+      Luz atual: <span id="luzsala3">Desconhecido</span><br>
+      Temperatura atual: <span id="tempsala3">Desconhecido</span><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/light/set', 'on')">Luz ON</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/light/set', 'off')">Luz OFF</button><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/temp/set', 'max')">Temp MAX</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/temp/set', 'min')">Temp MIN</button><br>
+      <input type="number" id="tempsala3value" min="18" max="24" placeholder="Digite a temperatura desejada">
+      <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room3/temp/set', 'tempsala3value')">Enviar Temp</button>
+    </div>
+
+    <div class="column">
+      <h2>CONTROLE</h2>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/alarm', 'on')">Alarme ON</button>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/alarm', 'off')">Alarme OFF</button><br>
+      <button onclick="sendCommand('iot_ufpr/equipe9/floor9/reset', 'reset')">Reinicializar Sistema</button>
+      <h3>Mensagens Recebidas</h3>
+      <div id="log"></div>
+    </div>
   </div>
 
-  <!-- Sala 2 -->
-  <div class="column">
-    <h3>SALA 2</h3>
-    Luz atual: <span id="luzsala2">Desconhecido</span><br>
-    Temperatura atual: <span id="tempsala2">Desconhecido</span><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/light/set', 'on')">Luz ON</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/light/set', 'off')">Luz OFF</button><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/temp/set', 'max')">Temp MAX</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room2/temp/set', 'min')">Temp MIN</button><br>
-    <input type="number" id="tempsala2value" min="18" max="24" placeholder="Temperatura desejada">
-    <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room2/temp/set', 'tempsala2value')">Enviar Temp</button>
-  </div>
+  <canvas id="graficoTemperatura"></canvas>
 
-  <!-- Sala 3 -->
-  <div class="column">
-    <h3>SALA 3</h3>
-    Luz atual: <span id="luzsala3">Desconhecido</span><br>
-    Temperatura atual: <span id="tempsala3">Desconhecido</span><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/light/set', 'on')">Luz ON</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/light/set', 'off')">Luz OFF</button><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/temp/set', 'max')">Temp MAX</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/room3/temp/set', 'min')">Temp MIN</button><br>
-    <input type="number" id="tempsala3value" min="18" max="24" placeholder="Temperatura desejada">
-    <button onclick="sendTemp('iot_ufpr/equipe9/floor9/room3/temp/set', 'tempsala3value')">Enviar Temp</button>
-  </div>
+  <script>
+    const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
-  <!-- Controle Geral -->
-  <div class="column">
-    <h3>CONTROLE</h3>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/alarm', 'on')">Alarme ON</button>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/alarm', 'off')">Alarme OFF</button><br>
-    <button onclick="sendCommand('iot_ufpr/equipe9/floor9/reset', 'reset')">Reinicializar Sistema</button><br><br>
-    <h4>Mensagens Recebidas</h4>
-    <div id="log"></div>
-  </div>
-</div>
+    client.on("connect", () => {
+      log("Conectado ao broker MQTT!");
+      const topics = [
+        "iot_ufpr/equipe9/floor9/room1/light",
+        "iot_ufpr/equipe9/floor9/room1/temp",
+        "iot_ufpr/equipe9/floor9/room2/light",
+        "iot_ufpr/equipe9/floor9/room2/temp",
+        "iot_ufpr/equipe9/floor9/room3/light",
+        "iot_ufpr/equipe9/floor9/room3/temp"
+      ];
+      topics.forEach(topic => client.subscribe(topic));
+    });
 
-<canvas id="graficoTemperatura"></canvas>
-
-<script>
-  const client = mqtt.connect('wss://broker.hivemq.com:8000/mqtt');
-  client.on("connect", () => {
-  log("Conectado ao broker");
-});
-
-
-  const log = document.getElementById("log");
-  const topics = {
-    sala1: {
-      temp: "iot_ufpr/equipe9/floor9/room1/temp",
-      luz: "iot_ufpr/equipe9/floor9/room1/light"
-    },
-    sala2: {
-      temp: "iot_ufpr/equipe9/floor9/room2/temp",
-      luz: "iot_ufpr/equipe9/floor9/room2/light"
-    },
-    sala3: {
-      temp: "iot_ufpr/equipe9/floor9/room3/temp",
-      luz: "iot_ufpr/equipe9/floor9/room3/light"
-    }
-  };
-
-  const dadosTemperatura = {
-    labels: [],
-    datasets: [
-      { label: 'Sala 1', data: [], borderColor: 'red' },
-      { label: 'Sala 2', data: [], borderColor: 'green' },
-      { label: 'Sala 3', data: [], borderColor: 'blue' }
-    ]
-  };
-
-  const grafico = new Chart(document.getElementById("graficoTemperatura"), {
-    type: 'line',
-    data: dadosTemperatura,
-    options: {
-      scales: {
-        x: { title: { display: true, text: 'Tempo' } },
-        y: { title: { display: true, text: 'Temperatura (°C)' }, min: 15, max: 30 }
+    client.on("message", (topic, message) => {
+      const value = message.toString();
+      log(`Tópico: ${topic} | Valor: ${value}`);
+      if (topic.includes("room1/light")) document.getElementById("luzsala1").innerText = value;
+      else if (topic.includes("room1/temp")) {
+        document.getElementById("tempsala1").innerText = value;
+        addTemp(0, value);
       }
+      else if (topic.includes("room2/light")) document.getElementById("luzsala2").innerText = value;
+      else if (topic.includes("room2/temp")) {
+        document.getElementById("tempsala2").innerText = value;
+        addTemp(1, value);
+      }
+      else if (topic.includes("room3/light")) document.getElementById("luzsala3").innerText = value;
+      else if (topic.includes("room3/temp")) {
+        document.getElementById("tempsala3").innerText = value;
+        addTemp(2, value);
+      }
+    });
+
+    function sendCommand(topic, msg) {
+      client.publish(topic, msg);
+      log(`🔼 Enviado para ${topic}: ${msg}`);
     }
-  });
 
-  client.on('connect', () => {
-    log.innerHTML += "Conectado ao broker<br>";
-    for (const sala in topics) {
-      client.subscribe(topics[sala].temp);
-      client.subscribe(topics[sala].luz);
-    }
-  });
-
-  client.on('message', (topic, message) => {
-    const msg = message.toString();
-    log.innerHTML += `<b>${topic}</b>: ${msg}<br>`;
-    log.scrollTop = log.scrollHeight;
-
-    if (topic.includes("room1")) {
-      if (topic.includes("temp")) {
-        document.getElementById("tempsala1").innerText = msg;
-        atualizarGrafico(0, parseFloat(msg));
+    function sendTemp(topic, inputId) {
+      const val = document.getElementById(inputId).value;
+      if (val >= 18 && val <= 24) {
+        client.publish(topic, val.toString());
+        log(`🔼 Temp enviada: ${val} para ${topic}`);
       } else {
-        document.getElementById("luzsala1").innerText = msg;
-      }
-    } else if (topic.includes("room2")) {
-      if (topic.includes("temp")) {
-        document.getElementById("tempsala2").innerText = msg;
-        atualizarGrafico(1, parseFloat(msg));
-      } else {
-        document.getElementById("luzsala2").innerText = msg;
-      }
-    } else if (topic.includes("room3")) {
-      if (topic.includes("temp")) {
-        document.getElementById("tempsala3").innerText = msg;
-        atualizarGrafico(2, parseFloat(msg));
-      } else {
-        document.getElementById("luzsala3").innerText = msg;
+        alert("Temperatura fora do intervalo 18–24");
       }
     }
-  });
 
-  function sendCommand(topic, msg) {
-    client.publish(topic, msg);
-  }
-
-  function sendTemp(topic, inputId) {
-    const value = document.getElementById(inputId).value;
-    if (value >= 18 && value <= 24) {
-      client.publish(topic, value);
-    } else {
-      alert("Temperatura fora do intervalo permitido (18–24°C)");
+    function log(msg) {
+      const logEl = document.getElementById("log");
+      logEl.innerHTML += `<div>${msg}</div>`;
+      logEl.scrollTop = logEl.scrollHeight;
     }
-  }
 
-  function atualizarGrafico(index, valor) {
-    const now = new Date().toLocaleTimeString();
-    if (dadosTemperatura.labels.length > 20) {
-      dadosTemperatura.labels.shift();
-      dadosTemperatura.datasets.forEach(ds => ds.data.shift());
+    // Gráfico de temperatura
+    const ctx = document.getElementById("graficoTemperatura").getContext("2d");
+    const chart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [
+          { label: "Sala 1", data: [], borderWidth: 2, fill: false },
+          { label: "Sala 2", data: [], borderWidth: 2, fill: false },
+          { label: "Sala 3", data: [], borderWidth: 2, fill: false }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: false, suggestedMin: 18, suggestedMax: 26 }
+        }
+      }
+    });
+
+    function addTemp(index, value) {
+      const timestamp = new Date().toLocaleTimeString();
+      if (chart.data.labels.length > 20) {
+        chart.data.labels.shift();
+        chart.data.datasets.forEach(ds => ds.data.shift());
+      }
+      if (index === 0) chart.data.labels.push(timestamp);
+      chart.data.datasets[index].data.push(Number(value));
+      chart.update();
     }
-    dadosTemperatura.labels.push(now);
-    dadosTemperatura.datasets[index].data.push(valor);
-    grafico.update();
-  }
-</script>
-
+  </script>
 </body>
 </html>
