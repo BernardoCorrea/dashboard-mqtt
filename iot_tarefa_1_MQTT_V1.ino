@@ -1,11 +1,11 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char* ssid  = "ILUMINET_AE5A";//"Galaxy Z Flip4";//"Redmi";//
-const char* password = "86777162";//"laralinda";//"pet112358";//
+const char* ssid  = ""; //wifi name
+const char* password = ; //wifi password
 
 //infos MQTT broker
-const char* mqtt_server = "broker.hivemq.com";
+const char* mqtt_server = "broker.hivemq.com"; //public broker
 const int mqtt_port = 1883;
 
 #define LED_PIN 2
@@ -13,54 +13,55 @@ const int mqtt_port = 1883;
 WiFiClient espClient; 
 PubSubClient client(espClient);
 
-const char* client_name = "iot_ufpr_equipe_9_client";
+const char* client_name = "iot_ufpr_equipe_9_client"; // topic used in the class
 
 String comando_rx;
 
 //-----------Room 1-----------
-const char* topic_set_lights_room_1 = "iot_ufpr/equipe9/floor9/room1/light/set";
-const char* topic_set_temp_room_1 = "iot_ufpr/equipe9/floor9/room1/temp/set";
+const char* topic_set_lights_room_1 = "iot_ufpr/equipe9/floor9/room1/light/set";  //topic for light control in room 1
+const char* topic_set_temp_room_1 = "iot_ufpr/equipe9/floor9/room1/temp/set";  //topic for temperature control in room 1
 
-const char* topic_get_lights_room_1 = "iot_ufpr/equipe9/floor9/room1/light";
-const char* topic_get_temp_room_1 = "iot_ufpr/equipe9/floor9/room1/temp";
-
+const char* topic_get_lights_room_1 = "iot_ufpr/equipe9/floor9/room1/light";  //topic to publish light status rrom 1
+const char* topic_get_temp_room_1 = "iot_ufpr/equipe9/floor9/room1/temp";   //topic to publish temperature status room 1
+ 
 int cur_temp_1 = 20;
 String led_state_1 = "off";
 
 
 //-----------Room 2-----------
-const char* topic_set_lights_room_2 = "iot_ufpr/equipe9/floor9/room2/light/set";
-const char* topic_set_temp_room_2 = "iot_ufpr/equipe9/floor9/room2/temp/set";
+const char* topic_set_lights_room_2 = "iot_ufpr/equipe9/floor9/room2/light/set";   //topic for light control in room 2
+const char* topic_set_temp_room_2 = "iot_ufpr/equipe9/floor9/room2/temp/set";  //topic for temperature control in room 2
 
-const char* topic_get_lights_room_2 = "iot_ufpr/equipe9/floor9/room2/light";
-const char* topic_get_temp_room_2 = "iot_ufpr/equipe9/floor9/room2/temp";
+const char* topic_get_lights_room_2 = "iot_ufpr/equipe9/floor9/room2/light"; //topic to publish light status roon 2
+const char* topic_get_temp_room_2 = "iot_ufpr/equipe9/floor9/room2/temp";  //topic to publish temperature status room 2
 
 int cur_temp_2 = 20;
 String led_state_2 = "off";
 
 //-----------Room 3-----------
-const char* topic_set_lights_room_3 = "iot_ufpr/equipe9/floor9/room3/light/set";
-const char* topic_set_temp_room_3 = "iot_ufpr/equipe9/floor9/room3/temp/set";
+const char* topic_set_lights_room_3 = "iot_ufpr/equipe9/floor9/room3/light/set";  //topic for light control in room 3
+const char* topic_set_temp_room_3 = "iot_ufpr/equipe9/floor9/room3/temp/set";  //topic for temperature control in room 3 
 
-const char* topic_get_lights_room_3 = "iot_ufpr/equipe9/floor9/room3/light";
-const char* topic_get_temp_room_3 = "iot_ufpr/equipe9/floor9/room3/temp";
+
+const char* topic_get_lights_room_3 = "iot_ufpr/equipe9/floor9/room3/light";  //topic to publish light status room 3
+const char* topic_get_temp_room_3 = "iot_ufpr/equipe9/floor9/room3/temp";  //topic to publish temperature status room 3
 
 int cur_temp_3 = 20;
 String led_state_3 = "off";
 
 //----------Alarm------------
-const char* topic_alarm = "iot_ufpr/equipe9/floor9/alarm";
+const char* topic_alarm = "iot_ufpr/equipe9/floor9/alarm";  //topic for alarm control
 volatile bool alarm_active = false;
 TaskHandle_t alarmHandle = NULL;
 
 //---------Reset------------
-const char* topic_reset = "iot_ufpr/equipe9/floor9/reset";
+const char* topic_reset = "iot_ufpr/equipe9/floor9/reset";  //topic for reset control
 
 const int temp_min = 18;
 const int temp_max = 24;
 const String temp_min_cmd = "min";
 const String temp_max_cmd = "max";
-const String temp_range[] = {"18", "19", "20", "21", "22" , "23", "24"};
+const String temp_range[] = {"18", "19", "20", "21", "22" , "23", "24"};  //limit the values that are acccepted, made this way because mqtt protocol transmits char and other values or words could be sent and cause erros
 
 String get_comand(byte* comando_tx, unsigned int length) {
   String comando = "";
